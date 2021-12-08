@@ -33,18 +33,12 @@
    name: elasticsearch
    state: started
    enabled: yes
-- name: Pause for 3 minutes
-  pause:
-    minutes: 3
-- shell: curl -X GET 'localhost:9200'/_cat/plugins
-  register: result
-- debug:
-    var: result
-- shell: /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
-  register: result1
-- debug:
-    var: result1
-- shell: curl -X GET 'localhost:9200'/_cat/plugins
-  register: result3
-- debug:
-    var: result3
+# Install a specific plugin in Elasticsearch >= 5.0
+- elasticsearch_plugin:
+    name: analysis-icu
+    state: present
+# RESTARTING ELATICSEARCH
+- name: Restart service ELASTIC SEARCH
+  service:
+    name: elasticsearch
+    state: restarted
